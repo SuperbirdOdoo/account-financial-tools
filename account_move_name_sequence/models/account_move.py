@@ -11,9 +11,6 @@ class AccountMove(models.Model):
     # highest_name is not needed any more
     # -> compute=False to improve perf
     highest_name = fields.Char(compute=False)
-    # made_sequence_hole is not relevant anymore (since based on sequence_prefix/number)
-    # -> compute=False to improve perf and to avoid displaying warning
-    made_sequence_hole = fields.Boolean(compute=False)
 
     _name_state_diagonal = models.Constraint(
         "CHECK(COALESCE(name, '') NOT IN ('/', '') OR state!='posted')",
@@ -94,6 +91,10 @@ class AccountMove(models.Model):
             move.name = name
         # Force compute of sequence_prefix and sequence_number
         self._compute_split_sequence()
+
+    def _update_sequence_made_gap(self, invalidate_current=False):
+        # Gap detection uses sequence.mixin, while this module uses ir.sequence.
+        self.filtered("made_sequence_gap").made_sequence_gap = False
 
     # We must by-pass this constraint of sequence.mixin
     def _constrains_date_sequence(self):

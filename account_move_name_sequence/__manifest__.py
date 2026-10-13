@@ -7,7 +7,7 @@
 
 {
     "name": "Account Move Number Sequence",
-    "version": "19.0.1.0.3",
+    "version": "20.0.1.0.3",
     "category": "Accounting",
     "license": "AGPL-3",
     "summary": "Generate journal entry number from sequence",
@@ -24,7 +24,7 @@
     "data": [
         "views/account_journal_views.xml",
         "views/account_move_views.xml",
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
     ],
     "post_init_hook": "post_init_hook",
     "installable": True,
